@@ -1,29 +1,42 @@
-import api from './api';
+const { LivrosRepository } = require("../repositories");
 
-export const livrosService = {
-    async listar() {
-        const response = await api.get('/livros');
-        return response.data;
-    },
+class LivrosService {
+    constructor() {
+        this.livrosRepository = new LivrosRepository();
+    }
+
+    async listarTodos() {
+        return await this.livrosRepository.findAll();
+    }
 
     async buscarPorId(id) {
-        const response = await api.get(`/livros/${id}`);
-        return response.data;
-    },
+        const livro = await this.livrosRepository.findById(id);
+        if (!livro) {
+            const error = new Error("Livro não encontrado");
+            error.statusCode = 404;
+            throw error;
+        }
+        return livro;
+    }
 
-    async criar(livro) {
-        console.log(livro);
-        const response = await api.post('/livros', livro);
-        return response.data;
-    },
+    async criar(dados) {
+        const anoAtual = new Date().getFullYear();
+        if (dados.ano > anoAtual + 1) {
+            const error = new Error("O ano do livro não pode ser muito no futuro");
+            error.statusCode = 400;
+            throw error;
+        }
 
-    async atualizar(id, livro) {
-        const response = await api.put(`/livros/${id}`, livro);
-        return response.data;
-    },
+        return await this.livrosRepository.create(dados);
+    }
+
+    async atualizar(id, dados) {
+        return await this.livrosRepository.update(id, dados);
+    }
 
     async remover(id) {
-        const response = await api.delete(`/livros/${id}`);
-        return response.data;
+        return await this.livrosRepository.delete(id);
     }
-};
+}
+
+module.exports = LivrosService;
