@@ -5,8 +5,7 @@ const LivroForm = ({ livro, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     titulo: "",
     autor: "",
-    ano: "",
-    categoria: "",
+    ano: ""
   });
 
   useEffect(() => {
@@ -14,8 +13,7 @@ const LivroForm = ({ livro, onSubmit, onCancel }) => {
       setFormData({
         titulo: livro.titulo || "",
         autor: livro.autor || "",
-        ano: livro.ano || "",
-        categoria: livro.categoria || ""
+        ano: livro.ano || ""
       });
     }
   }, [livro]);
@@ -57,17 +55,7 @@ const LivroForm = ({ livro, onSubmit, onCancel }) => {
               required
             />
           </div>
-          <div className="input-group">
-            <label htmlFor="categoria">Categoria *</label>
-            <input
-              type="text"
-              id="categoria"
-              name="categoria"
-              value={formData.categoria}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          {/* REMOVIDO: Input de Categoria */}
           <div className="input-group">
             <label htmlFor="ano">Ano *</label>
             <input

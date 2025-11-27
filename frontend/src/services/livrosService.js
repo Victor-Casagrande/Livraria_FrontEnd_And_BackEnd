@@ -1,42 +1,36 @@
-const { LivrosRepository } = require("../repositories");
+import api from './api';
 
-class LivrosService {
-    constructor() {
-        this.livrosRepository = new LivrosRepository();
-    }
+const listar = async () => {
+  const response = await api.get('/livros');
+  return response.data;
+};
 
-    async listarTodos() {
-        return await this.livrosRepository.findAll();
-    }
+const criar = async (dados) => {
+  const response = await api.post('/livros', dados);
+  return response.data;
+};
 
-    async buscarPorId(id) {
-        const livro = await this.livrosRepository.findById(id);
-        if (!livro) {
-            const error = new Error("Livro não encontrado");
-            error.statusCode = 404;
-            throw error;
-        }
-        return livro;
-    }
+const buscarPorId = async (id) => {
+  const response = await api.get(`/livros/${id}`);
+  return response.data;
+};
 
-    async criar(dados) {
-        const anoAtual = new Date().getFullYear();
-        if (dados.ano > anoAtual + 1) {
-            const error = new Error("O ano do livro não pode ser muito no futuro");
-            error.statusCode = 400;
-            throw error;
-        }
+const atualizar = async (id, dados) => {
+  const response = await api.put(`/livros/${id}`, dados);
+  return response.data;
+};
 
-        return await this.livrosRepository.create(dados);
-    }
+const remover = async (id) => {
+  const response = await api.delete(`/livros/${id}`);
+  return response.data;
+};
 
-    async atualizar(id, dados) {
-        return await this.livrosRepository.update(id, dados);
-    }
+const livrosService = {
+  listar,
+  criar,
+  buscarPorId,
+  atualizar,
+  remover
+};
 
-    async remover(id) {
-        return await this.livrosRepository.delete(id);
-    }
-}
-
-module.exports = LivrosService;
+export default livrosService;

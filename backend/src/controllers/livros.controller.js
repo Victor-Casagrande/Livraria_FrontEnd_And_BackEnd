@@ -26,11 +26,10 @@ class LivrosController {
 
     async criarLivro(req, res, next) {
         try {
-            const { titulo, autor, categoria, ano } = req.body;
+            const { titulo, autor, ano } = req.body; 
             const novoLivro = await this.livrosService.criar({
                 titulo,
                 autor,
-                categoria,
                 ano: parseInt(ano)
             });
             res.status(201).json({
@@ -45,12 +44,14 @@ class LivrosController {
     async atualizarLivro(req, res, next) {
         try {
             const id = parseInt(req.params.id);
-            const { titulo, autor, categoria, ano } = req.body;
+            const { titulo, autor, ano } = req.body;
+
+            const anoFormatado = ano ? parseInt(ano) : undefined;
+
             const livroAtualizado = await this.livrosService.atualizar(id, {
                 titulo,
                 autor,
-                categoria,
-                ano: parseInt(ano)
+                ano: anoFormatado
             });
 
             res.status(200).json({
