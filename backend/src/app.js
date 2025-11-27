@@ -1,23 +1,33 @@
-const app = require("./config/express");
+const express = require('express');
+const session = require('express-session');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const routes = require('./routes');
+const errorHandler = require('./middlewares/errorHandler');
 
-// Inicializa o banco de dados SQLite puro
-const db = require("./database/sqlite");
-db.init();
+const app = express();
 
-// Todas as rotas da aplicação
-const routes = require("./routes");
-// Configura o middleware de tratamento de erros
-const errorHandler = require("./middlewares/errorHandler");
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
-// Configura as rotas
-app.use("/api", routes);
+app.use(express.json());
+app.use(cookieParser());
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'minha-chave-super-secreta',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 // 1 dia
+    }
+}));
+
+app.use('/api', routes);
 
 app.use(errorHandler);
-
-// Handler para rotas não encontradas (404)
-app.use((req, res) => {
-    res.status(404).json({ erro: "Endpoint não encontrado" });
-});
-
 
 module.exports = app;
