@@ -1,27 +1,29 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/sqlite');
 
-const Livro = sequelize.define('Livro', {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  titulo: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
+    validate: {
+      len: [3, 255]
+    }
   },
-  autor: {
+  password_hash: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  ano: {
-    type: DataTypes.INTEGER,
     allowNull: false,
   }
 }, {
-  tableName: 'livros',
-  timestamps: true
+  tableName: 'users',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: false
 });
 
-module.exports = Livro;
+module.exports = User;
