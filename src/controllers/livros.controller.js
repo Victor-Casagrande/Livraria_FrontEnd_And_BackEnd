@@ -1,4 +1,4 @@
-const LivrosRepository = require("../repositories/livros.repository");
+const { LivrosRepository } = require("../repositories");
 
 class LivrosController {
     constructor() {

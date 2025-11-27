@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const UsersRepository = require('../repositories/users.repository');
-const User = require('../models/user.model');
+const { UsersRepository } = require('../repositories');
+const { User } = require('../models');
 
 class AuthController {
     constructor() {
