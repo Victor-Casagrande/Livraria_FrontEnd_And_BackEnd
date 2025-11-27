@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom'; // Removido BrowserRouter daqui
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
@@ -13,8 +13,8 @@ import './App.css';
 
 export default function App() {
   return (
+    // O BrowserRouter já está no main.jsx, então não precisamos dele aqui
     <AuthProvider>
-      <BrowserRouter>
         <Header />
         <div className="main-content">
           <Routes>
@@ -39,7 +39,6 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-      </BrowserRouter>
     </AuthProvider>
   );
 }
