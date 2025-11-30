@@ -1,23 +1,16 @@
-// todas as rotas aqui
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-// Rotas de livros
-const livrosRoutes = require("./livros.routes");
-// Rotas de autenticação
-const authRoutes = require("./auth.routes");
+const authRoutes = require('./auth.routes');
+const livrosRoutes = require('./livros.routes');
+const dashboardRoutes = require('./dashboard.routes');
 
-// Rota inicial (explicação do sistema)
-router.get("/", (req, res) => {
-    res.status(200).json({
-        mensagem: "Bem-vindo à API da Livraria! Use /livros para gerenciar os livros.",
-    });
+router.use('/auth', authRoutes);
+router.use('/livros', livrosRoutes);
+router.use('/dashboard', dashboardRoutes);
+
+router.get('/', (req, res) => {
+    res.status(200).json({ mensagem: 'API Livraria a funcionar!' });
 });
-
-// Usa as rotas de livros
-router.use("/livros", livrosRoutes);
-// Usa as rotas de autenticação
-router.use("/auth", authRoutes);
-
 
 module.exports = router;

@@ -5,6 +5,11 @@
   margin-bottom: 30px;
 }
 
+.livros-header .actions {
+    display: flex;
+    gap: 10px;
+}
+
 .livros-header h1 {
   margin: 0;
   font-size: 28px;

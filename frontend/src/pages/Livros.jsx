@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import livrosService from '../services/livrosService';
+import { livrosService } from '../services/livrosService';
 import LivroCard from '../components/LivroCard';
 import LivroForm from '../components/LivroForm';
 import './Livros.css';
@@ -44,6 +44,7 @@ const Livros = () => {
     if (!window.confirm('Tem certeza que deseja remover este livro?')) {
       return;
     }
+
     try {
       await livrosService.remover(id);
       showSuccess('Livro removido com sucesso!');
@@ -82,6 +83,10 @@ const Livros = () => {
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
+  const handleDownloadRelatorio = () => {
+    window.open('/api/livros/relatorio', '_blank');
+  };
+
   if (loading) {
     return <div className="loading">Carregando livros...</div>;
   }
@@ -90,15 +95,28 @@ const Livros = () => {
     <div className="container">
       <div className="livros-header">
         <h1>Meus Livros</h1>
-        <button onClick={handleCreate} className="btn btn-primary">
-          + Adicionar Livro
-        </button>
+        
+        {/* --- ATUALIZAÇÃO NO CABEÇALHO (Tarefa 4) --- */}
+        <div className="actions" style={{ display: 'flex', gap: '10px' }}>
+            <button 
+                onClick={handleDownloadRelatorio} 
+                className="btn btn-secondary"
+            >
+                📄 Relatório PDF
+            </button>
+            
+            <button onClick={handleCreate} className="btn btn-primary">
+                ➕ Adicionar Livro
+            </button>
+        </div>
+        {/* -------------------------------------------- */}
+      
       </div>
 
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
       )}
-
+      
       {error && (
         <div className="alert alert-error">{error}</div>
       )}

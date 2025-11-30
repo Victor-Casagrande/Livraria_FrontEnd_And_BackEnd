@@ -20,5 +20,10 @@
   "homepage": "https://github.com/Victor-Casagrande/Livraria_FrontEnd_And_BackEnd#readme",
   "devDependencies": {
     "concurrently": "^9.0.0"
+  },
+  "dependencies": {
+    "multer": "^2.0.2",
+    "pdfkit": "^0.17.2",
+    "recharts": "^3.5.1"
   }
 }
