@@ -1,3 +1,16 @@
-node_modules
+node_modules/
+
 .env
+
+*.sqlite
+*.db
+src/data/*.sqlite
 src/data/*.db
+
+uploads/*
+!uploads/.gitkeep
+
+logs/
+*.log
+.DS_Store
+Thumbs.db
