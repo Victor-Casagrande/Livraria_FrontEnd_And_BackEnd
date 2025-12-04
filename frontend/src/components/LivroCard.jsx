@@ -1,7 +1,7 @@
 import React from "react";
 import "./LivroCard.css";
 
-const LivroCard = ({ livro, onEdit, onDelete }) => {
+const LivroCard = ({ livro, onEdit, onDelete, onReviews }) => {
   const baseUrl = "http://localhost:3333";
 
   return (
@@ -68,9 +68,7 @@ const LivroCard = ({ livro, onEdit, onDelete }) => {
         <button
           className="btn btn-secondary"
           style={{ width: "100%", fontSize: "0.8rem" }}
-          onClick={() =>
-            alert("Funcionalidade de ver reviews seria aberta aqui (Modal)")
-          }
+          onClick={() => onReviews(livro)}
         >
           ⭐ Ver Avaliações
         </button>

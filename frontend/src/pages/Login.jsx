@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -20,33 +20,69 @@ export default function Login() {
 
   return (
     <div className="container">
-      <h1>Login</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>Usuário:</label>
-          <input
-            type="text"
-            value={formData.username}
-            onChange={(e) =>
-              setFormData({ ...formData, username: e.target.value })
-            }
-            required
-          />
+      <div
+        className="auth-card"
+        style={{
+          maxWidth: "400px",
+          margin: "50px auto",
+          padding: "30px",
+          borderRadius: "8px",
+        }}
+      >
+        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h1>
+
+        {error && <p className="alert alert-error">{error}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>Usuário:</label>
+            <input
+              type="text"
+              value={formData.username}
+              onChange={(e) =>
+                setFormData({ ...formData, username: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Senha:</label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: "100%", marginTop: "10px" }}
+          >
+            Entrar
+          </button>
+        </form>
+
+        <div
+          style={{ marginTop: "15px", textAlign: "center", fontSize: "0.9rem" }}
+        >
+          <Link
+            to="/forgot-password"
+            style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+          >
+            Esqueci minha senha
+          </Link>
         </div>
-        <div className="input-group">
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            required
-          />
+
+        <div
+          style={{ marginTop: "10px", textAlign: "center", fontSize: "0.9rem" }}
+        >
+          Ainda não tem conta? <Link to="/register">Registre-se</Link>
         </div>
-        <button type="submit">Entrar</button>
-      </form>
+      </div>
     </div>
   );
 }

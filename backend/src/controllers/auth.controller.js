@@ -1,5 +1,6 @@
+const crypto = require("crypto");
 const bcrypt = require("bcrypt");
-const { UsersRepository } = require("../repositories");
+const transporter = require("../config/mail");
 
 class AuthController {
   constructor() {
@@ -97,6 +98,74 @@ class AuthController {
         res.clearCookie("connect.sid");
         res.status(200).json({ mensagem: "Logout realizado com sucesso." });
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async forgotPassword(req, res, next) {
+    try {
+      const { email } = req.body;
+      const user = await this.usersRepository.findByEmail(email);
+
+      if (!user) {
+        // Por segurança, não informamos se o usuário existe ou não
+        return res
+          .status(200)
+          .json({ mensagem: "Se o e-mail existir, o link foi enviado." });
+      }
+
+      // Gerar token
+      const token = crypto.randomBytes(20).toString("hex");
+
+      // Definir expiração (1 hora)
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
+
+      user.reset_password_token = token;
+      user.reset_password_expires = now;
+
+      await user.save();
+
+      // Link para o frontend
+      const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+      // Enviar e-mail
+      await transporter.sendMail({
+        to: email,
+        from: process.env.EMAIL_USER,
+        subject: "Recuperação de Senha - Livraria",
+        html: `<p>Você solicitou a recuperação de senha.</p>
+             <p>Clique no link abaixo para redefinir:</p>
+             <a href="${resetLink}">${resetLink}</a>
+             <p>Este link expira em 1 hora.</p>`,
+      });
+
+      res.status(200).json({ mensagem: "E-mail enviado com sucesso." });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async resetPassword(req, res, next) {
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+
+      const user = await this.usersRepository.findByResetToken(token);
+
+      if (!user) {
+        return res.status(400).json({ erro: "Token inválido ou expirado." });
+      }
+
+      // Atualizar senha
+      user.password_hash = await bcrypt.hash(password, 10);
+      user.reset_password_token = null;
+      user.reset_password_expires = null;
+
+      await user.save();
+
+      res.status(200).json({ mensagem: "Senha alterada com sucesso." });
     } catch (err) {
       next(err);
     }

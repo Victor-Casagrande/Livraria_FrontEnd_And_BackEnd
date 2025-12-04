@@ -3,6 +3,7 @@ import livrosService from "../services/livrosService";
 import LivroCard from "../components/LivroCard";
 import LivroForm from "../components/LivroForm";
 import "./Livros.css";
+import ReviewsModal from "../components/ReviewsModal";
 
 const Livros = () => {
   const [livros, setLivros] = useState([]);
@@ -11,6 +12,7 @@ const Livros = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingLivro, setEditingLivro] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [reviewingLivro, setReviewingLivro] = useState(null);
 
   useEffect(() => {
     carregarLivros();
@@ -28,6 +30,14 @@ const Livros = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOpenReviews = (livro) => {
+    setReviewingLivro(livro);
+  };
+
+  const handleCloseReviews = () => {
+    setReviewingLivro(null);
   };
 
   const handleCreate = () => {
@@ -131,6 +141,7 @@ const Livros = () => {
               livro={livro}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              onReviews={handleOpenReviews}
             />
           ))}
         </div>
@@ -142,6 +153,10 @@ const Livros = () => {
           onSubmit={handleSubmit}
           onCancel={handleCancel}
         />
+      )}
+
+      {reviewingLivro && (
+        <ReviewsModal livro={reviewingLivro} onClose={handleCloseReviews} />
       )}
     </div>
   );

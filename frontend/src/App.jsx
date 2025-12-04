@@ -16,6 +16,8 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Livros from "./pages/Livros";
 import "./App.css";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
   return (
@@ -56,6 +58,8 @@ export default function App() {
             />
 
             <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Routes>
         </div>
       </ThemeProvider>

@@ -14,5 +14,11 @@ router.get("/me", requireAuth, (req, res, next) =>
 router.post("/logout", requireAuth, (req, res, next) =>
   authController.logout(req, res, next)
 );
+router.post("/forgot-password", (req, res, next) =>
+  authController.forgotPassword(req, res, next)
+);
+router.post("/reset-password/:token", (req, res, next) =>
+  authController.resetPassword(req, res, next)
+);
 
 module.exports = router;
