@@ -1,11 +1,7 @@
-const { sequelize } = require('../database/sqlite');
-const Livro = require('./livro.sequelize.model');
-const User = require('./user.sequelize.model');
+const Livro = require('./livro.model');
+const User = require('./user.model');
 
-const db = {
-    sequelize,
+module.exports = {
     Livro,
     User
 };
-
-module.exports = db;

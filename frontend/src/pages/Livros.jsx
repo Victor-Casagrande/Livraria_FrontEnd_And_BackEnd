@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { livrosService } from '../services/livrosService';
+import livrosService from '../services/livrosService';
 import LivroCard from '../components/LivroCard';
 import LivroForm from '../components/LivroForm';
 import './Livros.css';
