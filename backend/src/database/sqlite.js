@@ -1,11 +1,11 @@
-const Database = require('better-sqlite3');
-const path = require('path');
+const Database = require("better-sqlite3");
+const path = require("path");
 
-const dbPath = path.resolve(__dirname, '..', 'data', 'livraria.sqlite');
+const dbPath = path.resolve(__dirname, "..", "data", "livraria.sqlite");
 
 const db = new Database(dbPath);
 
-db.pragma('foreign_keys = ON');
+db.pragma("foreign_keys = ON");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (

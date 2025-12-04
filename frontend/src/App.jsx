@@ -22,11 +22,9 @@ export default function App() {
     <AuthProvider>
       <ThemeProvider>
         {" "}
-        {/* <-- Adicionar este Wrapper */}
         <Header />
         <div className="main-content">
           <Routes>
-            {/* Rotas Públicas */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
@@ -39,7 +37,6 @@ export default function App() {
               }
             />
 
-            {/* Rotas Privadas */}
             <Route
               path="/"
               element={
@@ -58,7 +55,6 @@ export default function App() {
               }
             />
 
-            {/* Rota para qualquer URL desconhecido */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

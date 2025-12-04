@@ -5,7 +5,6 @@ const { LivrosController } = require("../controllers");
 const upload = require("../config/upload");
 
 const { requireAuth } = require("../middlewares/auth");
-
 const { validarParamId } = require("../middlewares/validar/livros.validar");
 
 const livrosController = new LivrosController();
@@ -29,6 +28,7 @@ router.post("/", requireAuth, upload.single("capa"), (req, res, next) => {
 router.put(
   "/:id",
   validarParamId,
+  upload.single("capa"),
   livrosController.atualizarLivro.bind(livrosController)
 );
 

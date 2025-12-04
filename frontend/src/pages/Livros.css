@@ -6,8 +6,8 @@
 }
 
 .livros-header .actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .livros-header h1 {
@@ -27,7 +27,7 @@
   padding: 60px 20px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: #333;
 }
 

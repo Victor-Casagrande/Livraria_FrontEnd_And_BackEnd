@@ -1,12 +1,12 @@
-import api from './api';
+import api from "./api";
 
 const listar = async () => {
-  const response = await api.get('/livros');
+  const response = await api.get("/livros");
   return response.data;
 };
 
 const criar = async (dados) => {
-  const response = await api.post('/livros', dados);
+  const response = await api.post("/livros", dados);
   return response.data;
 };
 
@@ -30,7 +30,7 @@ const livrosService = {
   criar,
   buscarPorId,
   atualizar,
-  remover
+  remover,
 };
 
 export default livrosService;

@@ -4,19 +4,21 @@ const session = require("express-session");
 
 const app = express();
 
-app.use(express.json()); // Middleware para interpretar JSON no corpo da requisição
-app.use(express.urlencoded({ extended: true })); // Suporte para dados de formulários
-app.use(morgan("common")); // Logging HTTP
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("common"));
 
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET || "livraria_secret_key",
     resave: false,
     saveUninitialized: false,
     cookie: {
-        httpOnly: true,
-        secure: false, // true apenas em produção HTTPS
-        maxAge: 1000 * 60 * 60 * 2 // 2 horas
-    }
-}));
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 2,
+    },
+  })
+);
 
 module.exports = app;

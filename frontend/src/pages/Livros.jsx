@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import livrosService from '../services/livrosService';
-import LivroCard from '../components/LivroCard';
-import LivroForm from '../components/LivroForm';
-import './Livros.css';
+import React, { useState, useEffect } from "react";
+import livrosService from "../services/livrosService";
+import LivroCard from "../components/LivroCard";
+import LivroForm from "../components/LivroForm";
+import "./Livros.css";
 
 const Livros = () => {
   const [livros, setLivros] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingLivro, setEditingLivro] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     carregarLivros();
@@ -19,11 +19,11 @@ const Livros = () => {
   const carregarLivros = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError("");
       const data = await livrosService.listar();
       setLivros(data);
     } catch (err) {
-      setError('Erro ao carregar livros.');
+      setError("Erro ao carregar livros.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -41,16 +41,16 @@ const Livros = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Tem certeza que deseja remover este livro?')) {
+    if (!window.confirm("Tem certeza que deseja remover este livro?")) {
       return;
     }
 
     try {
       await livrosService.remover(id);
-      showSuccess('Livro removido com sucesso!');
+      showSuccess("Livro removido com sucesso!");
       carregarLivros();
     } catch (err) {
-      setError('Erro ao remover livro.');
+      setError("Erro ao remover livro.");
       console.error(err);
     }
   };
@@ -59,16 +59,16 @@ const Livros = () => {
     try {
       if (editingLivro) {
         await livrosService.atualizar(editingLivro.id, formData);
-        showSuccess('Livro atualizado com sucesso!');
+        showSuccess("Livro atualizado com sucesso!");
       } else {
         await livrosService.criar(formData);
-        showSuccess('Livro criado com sucesso!');
+        showSuccess("Livro criado com sucesso!");
       }
       setShowForm(false);
       setEditingLivro(null);
       carregarLivros();
     } catch (err) {
-      setError(err.response?.data?.erro || 'Erro ao salvar livro.');
+      setError(err.response?.data?.erro || "Erro ao salvar livro.");
       console.error(err);
     }
   };
@@ -80,11 +80,11 @@ const Livros = () => {
 
   const showSuccess = (message) => {
     setSuccessMessage(message);
-    setTimeout(() => setSuccessMessage(''), 3000);
+    setTimeout(() => setSuccessMessage(""), 3000);
   };
 
   const handleDownloadRelatorio = () => {
-    window.open('/api/livros/relatorio', '_blank');
+    window.open("/api/livros/relatorio", "_blank");
   };
 
   if (loading) {
@@ -95,31 +95,26 @@ const Livros = () => {
     <div className="container">
       <div className="livros-header">
         <h1>Meus Livros</h1>
-        
-        {/* --- ATUALIZAÇÃO NO CABEÇALHO (Tarefa 4) --- */}
-        <div className="actions" style={{ display: 'flex', gap: '10px' }}>
-            <button 
-                onClick={handleDownloadRelatorio} 
-                className="btn btn-secondary"
-            >
-                📄 Relatório PDF
-            </button>
-            
-            <button onClick={handleCreate} className="btn btn-primary">
-                ➕ Adicionar Livro
-            </button>
+
+        <div className="actions" style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={handleDownloadRelatorio}
+            className="btn btn-secondary"
+          >
+            📄 Relatório PDF
+          </button>
+
+          <button onClick={handleCreate} className="btn btn-primary">
+            ➕ Adicionar Livro
+          </button>
         </div>
-        {/* -------------------------------------------- */}
-      
       </div>
 
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
       )}
-      
-      {error && (
-        <div className="alert alert-error">{error}</div>
-      )}
+
+      {error && <div className="alert alert-error">{error}</div>}
 
       {livros.length === 0 ? (
         <div className="empty-state">

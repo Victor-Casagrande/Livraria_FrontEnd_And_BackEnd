@@ -1,20 +1,20 @@
-const { User } = require('../models');
+const { User } = require("../models");
 
 class UsersRepository {
-    async findById(id) {
-        return await User.findByPk(id);
-    }
+  async findById(id) {
+    return await User.findByPk(id);
+  }
 
-    async findByUsername(username) {
-        return await User.findOne({ where: { username } });
-    }
+  async findByUsername(username) {
+    return await User.findOne({ where: { username } });
+  }
 
-    async create({ username, passwordHash }) {
-        return await User.create({
-            username,
-            password_hash: passwordHash
-        });
-    }
+  async create({ username, passwordHash }) {
+    return await User.create({
+      username,
+      password_hash: passwordHash,
+    });
+  }
 }
 
 module.exports = UsersRepository;
