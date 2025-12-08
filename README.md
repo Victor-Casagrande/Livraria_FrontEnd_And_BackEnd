@@ -1,52 +1,101 @@
-# Livraria
+# Projeto Final - Livraria Web
 
-Este projeto é uma aplicação web simples para praticar conceitos básicos de desenvolvimento web, incluindo principalmente o protocolo HTTP, HTML, CSS e JavaScript. A aplicação simula uma livraria onde os usuários podem cadastrar, visualizar, editar e excluir livros.
+Este projeto é a expansão do sistema de gerenciamento de livraria, desenvolvido como avaliação final da disciplina de Desenvolvimento Web I. A aplicação integra um Backend (Node.js/Express) com um Frontend (React), implementando funcionalidades avançadas de autenticação e gerenciamento de dados.
 
-## Tutoriais
+## Funcionalidades Implementadas
 
-- [Parte 2](./parte-2.md)
-- [Parte 3](./parte-3.md)
-- [Parte 4](./parte-4.md)
-- [Parte 5](./parte-5.md)
-- [Parte 6 — Configurando SQLite (sqlite3 e better-sqlite3)](./parte-6.md)
+Conforme requisitado no projeto, as seguintes funcionalidades foram implementadas:
 
-## Como Testar
+1.  **Recuperação de Senha via E-mail:** Fluxo completo com envio de token para o Gmail do usuário e redefinição de senha segura.
+2.  **Sistema de Favoritos:** O usuário pode marcar/desmarcar livros favoritos, que ficam salvos em sua conta pessoal.
+3.  **Upload de Capa de Livro:** Cadastro de livros com upload de imagens (armazenamento local) e exibição no card do livro.
+4.  **Autenticação Completa:** Login, Registro e Logout com controle de sessão.
 
-Para testar os endpoints da aplicação, você pode usar ferramentas como Postman ou cURL. Abaixo estão os endpoints disponíveis:
+## Vídeo de Demonstração
 
-- `GET /`: Retorna a página inicial da aplicação.
+[COLOQUE O LINK DO SEU VÍDEO NO YOUTUBE/DRIVE AQUI]
 
-```bash
-curl http://localhost:3000/
-```
+---
 
-- `GET /livros`: Retorna uma lista de todos os livros cadastrados.
+## Como Executar o Projeto (Instruções para Correção)
 
-```bash
-curl http://localhost:3000/api/livros
-```
+### Pré-requisitos
 
-- `GET /livros/:id`: Retorna os detalhes de um livro específico pelo seu ID.
+* **Node.js** instalado.
+* Uma conta **Gmail** para testar o envio de e-mails de recuperação (é necessário gerar uma "Senha de App" nas configurações de segurança do Google, pois a senha padrão não funciona mais para aplicações externas).
 
-```bash
-curl http://localhost:3000/api/livros/1
-```
+### Passo 1: Configurar o Backend
 
-- `POST /livros`: Adiciona um novo livro. O corpo da requisição deve conter os detalhes do livro em formato JSON.
+1.  Abra o terminal e entre na pasta do backend:
+    ```bash
+    cd backend
+    ```
 
-```bash
-# Livro de informática
-curl -X POST http://localhost:3000/api/livros -H "Content-Type: application/json" -d '{"titulo": "Novo Livro", "autor": "Autor Exemplo", "ano": 2024, "categoria": "Informática"}'
-```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
 
-- `PUT /livros/:id`: Atualiza os detalhes de um livro existente pelo seu ID. O corpo da requisição deve conter os novos detalhes do livro em formato JSON.
+3.  **Configure as variáveis de ambiente:**
+    * Duplique o arquivo `.env.example` e renomeie-o para `.env`.
+    * Edite o arquivo `.env` com seus dados:
+        ```ini
+        PORT=3333
+        SESSION_SECRET=sua-chave-secreta-aqui
+        # Credenciais para envio de e-mail (Obrigatório para recuperar senha)
+        EMAIL_USER=seu-email@gmail.com
+        EMAIL_PASS=sua-senha-de-app-google-de-16-caracteres
+        # URL do Frontend para o link no e-mail funcionar corretamente
+        FRONTEND_URL=http://localhost:5173
+        ```
 
-```bash
-curl -X PUT http://localhost:3000/api/livros/4 -H "Content-Type: application/json" -d '{"titulo": "Livro Atualizado", "autor": "Autor Atualizado", "ano": 2025, "categoria": "Ficção"}'
-```
+4.  **Inicialize o Banco de Dados:**
+    * Execute o script que cria as tabelas (Users, Livros, Favoritos) e colunas necessárias:
+        ```bash
+        node scripts/migrate-up.js
+        ```
+    * (Opcional) Popule o banco com dados iniciais:
+        ```bash
+        npm run seed
+        ```
 
-- `DELETE /livros/:id`: Remove um livro pelo seu ID.
+5.  Inicie o servidor:
+    ```bash
+    npm run dev
+    ```
+    > O servidor rodará na porta **3333**.
 
-```bash
-curl -X DELETE http://localhost:3000/api/livros/4
-```
+### Passo 2: Configurar o Frontend
+
+1.  Em um **novo terminal**, entre na pasta do frontend:
+    ```bash
+    cd frontend
+    ```
+
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+
+3.  Inicie o projeto React:
+    ```bash
+    npm run dev
+    ```
+
+4.  Acesse o link exibido no terminal (geralmente **http://localhost:5173**).
+
+---
+
+## Como Testar as Funcionalidades
+
+Recomenda-se testar a aplicação diretamente pela interface web (Frontend), pois as rotas agora são protegidas por autenticação via Cookies.
+
+1.  **Crie uma conta** na tela de Registro.
+2.  **Faça Login**.
+3.  **Favoritos:** Clique no ícone de coração nos livros para testar a persistência.
+4.  **Upload:** Tente criar um livro enviando uma imagem.
+5.  **Recuperação de Senha:**
+    * Faça Logout.
+    * Clique em "Esqueci minha senha".
+    * Insira o e-mail configurado no banco (ou crie um usuário com seu e-mail real).
+    * Verifique a caixa de entrada do Gmail e clique no link para redefinir.

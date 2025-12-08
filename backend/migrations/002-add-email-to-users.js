@@ -4,7 +4,7 @@ module.exports = {
 
     await queryInterface.addColumn("users", "email", {
       type: DataTypes.STRING,
-      allowNull: true, 
+      allowNull: true,
     });
 
     await queryInterface.addColumn("users", "reset_password_token", {
@@ -25,9 +25,9 @@ module.exports = {
 
   down: async (sequelize) => {
     const queryInterface = sequelize.getQueryInterface();
-    
+
     await queryInterface.removeIndex("users", "users_email_unique");
-    
+
     await queryInterface.removeColumn("users", "email");
     await queryInterface.removeColumn("users", "reset_password_token");
     await queryInterface.removeColumn("users", "reset_password_expires");

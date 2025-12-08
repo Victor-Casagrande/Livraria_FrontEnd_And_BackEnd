@@ -9,7 +9,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const publicRoutes = ["/login", "/register"];
+      const publicRoutes = [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+      ];
       const currentPath = window.location.pathname;
       if (!publicRoutes.includes(currentPath)) {
         window.location.href = "/login";

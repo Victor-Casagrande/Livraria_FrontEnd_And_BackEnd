@@ -1,6 +1,31 @@
 module.exports = {
   up: async (sequelize, DataTypes) => {
-    await sequelize.getQueryInterface().createTable("livros", {
+    const queryInterface = sequelize.getQueryInterface();
+
+    console.log("Criando tabela 'users'...");
+    await queryInterface.createTable("users", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password_hash: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+      },
+    });
+
+    console.log("Criando tabela 'livros'...");
+    await queryInterface.createTable("livros", {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -18,7 +43,10 @@ module.exports = {
       },
     });
   },
+
   down: async (sequelize) => {
-    await sequelize.getQueryInterface().dropTable("livros");
+    const queryInterface = sequelize.getQueryInterface();
+    await queryInterface.dropTable("livros");
+    await queryInterface.dropTable("users");
   },
 };
