@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   return (
     <div className="container dashboard-container">
-      <h1>📊 Dashboard Analítico</h1>
+      <h1>Dashboard Analítico</h1>
 
       <div className="stats-grid">
         <div className="stat-card">
@@ -61,7 +61,7 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <h3>Média de Notas</h3>
-          <p className="stat-number">⭐ {dados.mediaNota || 0}</p>
+          <p className="stat-number">{dados.mediaNota || 0}</p>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const { UsersRepository } = require("../repositories");
 const transporter = require("../config/mail");
 
 class AuthController {
@@ -9,7 +10,7 @@ class AuthController {
 
   async register(req, res, next) {
     try {
-      const { username, password } = req.body;
+      const { username, password, email } = req.body;
 
       if (!username || username.length < 3) {
         const e = new Error("O username deve ter pelo menos 3 caracteres");
@@ -33,6 +34,7 @@ class AuthController {
       const created = await this.usersRepository.create({
         username,
         passwordHash,
+        email,
       });
 
       req.session.userId = created.id;
@@ -85,7 +87,9 @@ class AuthController {
       const user = await this.usersRepository.findById(req.session.userId);
       if (!user) return res.status(401).json({ erro: "Sessão inválida" });
 
-      res.status(200).json({ id: user.id, username: user.username });
+      res
+        .status(200)
+        .json({ id: user.id, username: user.username, email: user.email });
     } catch (err) {
       next(err);
     }
@@ -109,36 +113,28 @@ class AuthController {
       const user = await this.usersRepository.findByEmail(email);
 
       if (!user) {
-        // Por segurança, não informamos se o usuário existe ou não
         return res
           .status(200)
           .json({ mensagem: "Se o e-mail existir, o link foi enviado." });
       }
 
-      // Gerar token
       const token = crypto.randomBytes(20).toString("hex");
 
-      // Definir expiração (1 hora)
       const now = new Date();
       now.setHours(now.getHours() + 1);
 
       user.reset_password_token = token;
       user.reset_password_expires = now;
 
-      await user.save();
+      await this.usersRepository.save(user);
 
-      // Link para o frontend
       const resetLink = `http://localhost:3000/reset-password/${token}`;
 
-      // Enviar e-mail
       await transporter.sendMail({
         to: email,
         from: process.env.EMAIL_USER,
-        subject: "Recuperação de Senha - Livraria",
-        html: `<p>Você solicitou a recuperação de senha.</p>
-             <p>Clique no link abaixo para redefinir:</p>
-             <a href="${resetLink}">${resetLink}</a>
-             <p>Este link expira em 1 hora.</p>`,
+        subject: "Recuperação de Senha",
+        html: `<p>Para redefinir sua senha, clique no link:</p><a href="${resetLink}">Redefinir Senha</a>`,
       });
 
       res.status(200).json({ mensagem: "E-mail enviado com sucesso." });
@@ -158,12 +154,11 @@ class AuthController {
         return res.status(400).json({ erro: "Token inválido ou expirado." });
       }
 
-      // Atualizar senha
       user.password_hash = await bcrypt.hash(password, 10);
       user.reset_password_token = null;
       user.reset_password_expires = null;
 
-      await user.save();
+      await this.usersRepository.save(user);
 
       res.status(200).json({ mensagem: "Senha alterada com sucesso." });
     } catch (err) {

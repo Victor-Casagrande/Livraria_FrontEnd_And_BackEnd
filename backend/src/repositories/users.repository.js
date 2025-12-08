@@ -6,6 +6,10 @@ class UsersRepository {
     return await User.findByPk(id);
   }
 
+  async findByUsername(username) {
+    return await User.findOne({ where: { username } });
+  }
+
   async findByEmail(email) {
     return await User.findOne({ where: { email } });
   }
@@ -19,19 +23,16 @@ class UsersRepository {
     });
   }
 
-  async save(user) {
-    return await user.save();
-  }
-
-  async findByUsername(username) {
-    return await User.findOne({ where: { username } });
-  }
-
-  async create({ username, passwordHash }) {
+  async create({ username, passwordHash, email }) {
     return await User.create({
       username,
       password_hash: passwordHash,
+      email: email || null,
     });
+  }
+
+  async save(user) {
+    return await user.save();
   }
 }
 
