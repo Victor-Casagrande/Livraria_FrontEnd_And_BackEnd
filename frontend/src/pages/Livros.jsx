@@ -102,7 +102,7 @@ const Livros = () => {
   }
 
   return (
-    <div className="container">
+    <div className="livros-container">
       <div className="livros-header">
         <h1>Meus Livros</h1>
 
@@ -119,13 +119,10 @@ const Livros = () => {
           </button>
         </div>
       </div>
-
       {successMessage && (
         <div className="alert alert-success">{successMessage}</div>
       )}
-
       {error && <div className="alert alert-error">{error}</div>}
-
       {livros.length === 0 ? (
         <div className="empty-state">
           <p>Nenhum livro cadastrado ainda.</p>
@@ -146,7 +143,6 @@ const Livros = () => {
           ))}
         </div>
       )}
-
       {showForm && (
         <LivroForm
           livro={editingLivro}
@@ -154,7 +150,6 @@ const Livros = () => {
           onCancel={handleCancel}
         />
       )}
-
       {reviewingLivro && (
         <ReviewsModal livro={reviewingLivro} onClose={handleCloseReviews} />
       )}

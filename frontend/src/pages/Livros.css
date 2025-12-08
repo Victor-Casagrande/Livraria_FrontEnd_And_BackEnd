@@ -1,13 +1,24 @@
+.livros-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .livros-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  margin-top: 20px; /* Garante um espaço do topo */
+  position: relative; /* Necessário para o z-index funcionar */
+  z-index: 5; /* Garante que fique acima de elementos decorativos */
 }
 
 .livros-header .actions {
   display: flex;
   gap: 10px;
+  position: relative; /* Reforço */
+  z-index: 10; /* Reforço para os botões */
 }
 
 .livros-header h1 {
@@ -17,8 +28,8 @@
 
 .livros-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
   margin-top: 20px;
 }
 
@@ -51,4 +62,10 @@
 .alert-success {
   background-color: #d4edda;
   color: #155724;
+}
+
+@media (max-width: 600px) {
+  .livros-grid {
+    grid-template-columns: 1fr;
+  }
 }

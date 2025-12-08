@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import "./Header.css";
@@ -7,64 +7,83 @@ import "./Header.css";
 const Header = () => {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
 
   return (
     <header className="header">
-      <div className="container header-content">
+      <div className="header-container">
         <Link to="/" className="logo">
-          <h1>Livraria</h1>
+          📚 <span style={{ color: "var(--text-color)" }}>Livraria</span>App
         </Link>
 
-        <nav className="nav">
-          <button
-            onClick={toggleTheme}
-            className="btn btn-secondary"
-            style={{
-              marginRight: "15px",
-              padding: "5px 10px",
-              fontSize: "1.2rem",
-            }}
-            title={
-              theme === "light" ? "Ativar Modo Escuro" : "Ativar Modo Claro"
-            }
-          >
-            {theme === "light" ? "🌙" : "☀️"}
-          </button>
+        <nav>
+          <ul className="nav-links">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
 
-          {user ? (
-            <>
-              <Link to="/" className="nav-link">
-                Início
-              </Link>
-              <Link to="/livros" className="nav-link">
-                Livros
-              </Link>
-              <Link to="/dashboard" className="nav-link">
-                Dashboard
-              </Link>
-              <div className="user-info">
-                <span>Olá, {user.username}!</span>
-                <button onClick={handleLogout} className="btn btn-secondary">
-                  Sair
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-              <Link to="/register" className="nav-link">
-                Registrar
-              </Link>
-            </>
-          )}
+            {user ? (
+              <>
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/livros">Livros</Link>
+                </li>
+                <li>
+                  <Link to="/favoritos">Favoritos</Link>
+                </li>
+
+                <li
+                  style={{
+                    borderLeft: "1px solid var(--border-color)",
+                    height: "20px",
+                    margin: "0 5px",
+                  }}
+                ></li>
+
+                <li
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <button
+                    onClick={logout}
+                    className="btn-logout"
+                    title="Sair do sistema"
+                  >
+                    Sair
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link
+                    to="/register"
+                    style={{
+                      backgroundColor: "var(--primary-color)",
+                      color: "#fff",
+                      padding: "8px 16px",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    Criar Conta
+                  </Link>
+                </li>
+              </>
+            )}
+
+            <li>
+              <button
+                onClick={toggleTheme}
+                className="theme-toggle"
+                title="Mudar Tema"
+              >
+                {theme === "light" ? "🌙" : "☀️"}
+              </button>
+            </li>
+          </ul>
         </nav>
       </div>
     </header>
