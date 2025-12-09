@@ -69,19 +69,19 @@ const LivroCard = ({ livro, onEdit, onDelete, onReviews }) => {
         </div>
 
         <button className="btn-reviews" onClick={() => onReviews(livro)}>
-          ⭐ Ver Avaliações
+          Ver Avaliações
         </button>
       </div>
 
       <div className="card-actions">
         <button onClick={() => onEdit(livro)} className="btn-icon btn-edit">
-          ✏️ Editar
+          Editar
         </button>
         <button
           onClick={() => onDelete(livro.id)}
           className="btn-icon btn-delete"
         >
-          🗑️ Excluir
+          Excluir
         </button>
       </div>
     </div>

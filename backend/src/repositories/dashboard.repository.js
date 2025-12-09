@@ -1,34 +1,35 @@
-const db = require("../database/sqlite");
+const { sequelize } = require("../database");
+const { QueryTypes } = require("sequelize");
 
 class DashboardRepository {
   async getStats() {
-    const totalLivros = db
-      .prepare("SELECT COUNT(*) as count FROM livros")
-      .get().count;
+    const [livrosResult] = await sequelize.query(
+      "SELECT COUNT(*) as count FROM livros",
+      { type: QueryTypes.SELECT }
+    );
 
-    const totalReviews = db
-      .prepare("SELECT COUNT(*) as count FROM reviews")
-      .get().count;
+    const [usuariosResult] = await sequelize.query(
+      "SELECT COUNT(*) as count FROM users",
+      { type: QueryTypes.SELECT }
+    );
 
-    const mediaNota = db
-      .prepare("SELECT AVG(nota) as avg FROM reviews")
-      .get().avg;
+    const [mediaAnoResult] = await sequelize.query(
+      "SELECT AVG(ano) as avg FROM livros",
+      { type: QueryTypes.SELECT }
+    );
 
-    const livrosPorCategoria = db
-      .prepare(
-        `
-            SELECT categoria, COUNT(*) as quantidade 
-            FROM livros 
-            WHERE categoria IS NOT NULL AND categoria != ''
-            GROUP BY categoria
-        `
-      )
-      .all();
+    const livrosPorCategoria = await sequelize.query(
+      `SELECT categoria, COUNT(*) as total 
+       FROM livros 
+       WHERE categoria IS NOT NULL 
+       GROUP BY categoria`,
+      { type: QueryTypes.SELECT }
+    );
 
     return {
-      totalLivros,
-      totalReviews,
-      mediaNota: mediaNota ? Number(mediaNota.toFixed(1)) : 0,
+      totalLivros: livrosResult?.count || 0,
+      totalUsuarios: usuariosResult?.count || 0,
+      mediaAno: mediaAnoResult?.avg || 0,
       livrosPorCategoria,
     };
   }

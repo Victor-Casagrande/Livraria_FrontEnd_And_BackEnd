@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { authService } from "../services/authService";
 import { Link } from "react-router-dom";
+import "./AuthForms.css";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -27,32 +28,34 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: "400px", marginTop: "50px" }}>
-      <h2>Recuperar Senha</h2>
-      {message && <div className="alert alert-success">{message}</div>}
-      {error && <div className="alert alert-error">{error}</div>}
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Recuperar Senha</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>E-mail:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        {message && <div className="alert alert-success">{message}</div>}
+        {error && <div className="alert alert-error">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Digite seu e-mail:</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="exemplo@email.com"
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Enviando..." : "Enviar Link"}
+          </button>
+        </form>
+
+        <div className="auth-links">
+          <Link to="/login">Voltar para Login</Link>
         </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={loading}
-          style={{ width: "100%" }}
-        >
-          {loading ? "Enviando..." : "Enviar Link"}
-        </button>
-      </form>
-      <div style={{ marginTop: "15px", textAlign: "center" }}>
-        <Link to="/login">Voltar para Login</Link>
       </div>
     </div>
   );

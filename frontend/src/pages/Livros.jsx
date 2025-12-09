@@ -111,11 +111,11 @@ const Livros = () => {
             onClick={handleDownloadRelatorio}
             className="btn btn-secondary"
           >
-            📄 Relatório PDF
+            Relatório PDF
           </button>
 
           <button onClick={handleCreate} className="btn btn-primary">
-            ➕ Adicionar Livro
+            Adicionar Livro
           </button>
         </div>
       </div>

@@ -128,7 +128,7 @@ class AuthController {
 
       await this.usersRepository.save(user);
 
-      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
       const resetLink = `${frontendUrl}/reset-password/${token}`;
 
       await transporter.sendMail({

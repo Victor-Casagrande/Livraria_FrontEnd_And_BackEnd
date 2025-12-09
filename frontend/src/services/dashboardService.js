@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const dashboardService = {
-  async getDados() {
+  async getStats() {
     const response = await api.get("/dashboard");
     return response.data;
   },

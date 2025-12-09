@@ -12,7 +12,7 @@ const Header = () => {
     <header className="header">
       <div className="header-container">
         <Link to="/" className="logo">
-          📚 <span style={{ color: "var(--text-color)" }}>Livraria</span>App
+          <span style={{ color: "var(--text-color)" }}>Livraria</span>App
         </Link>
 
         <nav>

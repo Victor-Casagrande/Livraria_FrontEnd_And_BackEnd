@@ -55,7 +55,7 @@ class LivrosController {
       const { titulo, autor, ano, editora, categoria } = req.body;
 
       const anoFormatado = isNaN(parseInt(ano)) ? null : parseInt(ano);
-      
+
       const dadosAtualizacao = {
         titulo,
         autor,

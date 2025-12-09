@@ -9,16 +9,16 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  margin-top: 20px; /* Garante um espaço do topo */
-  position: relative; /* Necessário para o z-index funcionar */
-  z-index: 5; /* Garante que fique acima de elementos decorativos */
+  margin-top: 20px;
+  position: relative;
+  z-index: 5;
 }
 
 .livros-header .actions {
   display: flex;
   gap: 10px;
-  position: relative; /* Reforço */
-  z-index: 10; /* Reforço para os botões */
+  position: relative;
+  z-index: 10;
 }
 
 .livros-header h1 {

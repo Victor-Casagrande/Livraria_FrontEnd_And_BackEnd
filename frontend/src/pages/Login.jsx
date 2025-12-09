@@ -20,25 +20,18 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
-      <div
-        className="auth-card"
-        style={{
-          maxWidth: "400px",
-          margin: "50px auto",
-          padding: "30px",
-          borderRadius: "8px",
-        }}
-      >
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h1>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Login</h1>
 
-        {error && <p className="alert alert-error">{error}</p>}
+        {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="form-group">
             <label>Usuário:</label>
             <input
               type="text"
+              className="form-control"
               value={formData.username}
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
@@ -46,10 +39,12 @@ export default function Login() {
               required
             />
           </div>
-          <div className="input-group">
+
+          <div className="form-group">
             <label>Senha:</label>
             <input
               type="password"
+              className="form-control"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -58,30 +53,17 @@ export default function Login() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={{ width: "100%", marginTop: "10px" }}
-          >
+          <button type="submit" className="btn btn-primary">
             Entrar
           </button>
         </form>
 
-        <div
-          style={{ marginTop: "15px", textAlign: "center", fontSize: "0.9rem" }}
-        >
-          <Link
-            to="/forgot-password"
-            style={{ color: "var(--text-secondary)", textDecoration: "none" }}
-          >
-            Esqueci minha senha
-          </Link>
-        </div>
+        <div className="auth-links">
+          <Link to="/forgot-password">Esqueci minha senha</Link>
 
-        <div
-          style={{ marginTop: "10px", textAlign: "center", fontSize: "0.9rem" }}
-        >
-          Ainda não tem conta? <Link to="/register">Registre-se</Link>
+          <span>
+            Ainda não tem conta? <Link to="/register">Registre-se</Link>
+          </span>
         </div>
       </div>
     </div>
