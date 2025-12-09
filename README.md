@@ -42,7 +42,7 @@ Conforme requisitado no projeto, as seguintes funcionalidades foram implementada
         EMAIL_USER=seu-email@gmail.com
         EMAIL_PASS=sua-senha-de-app-google-de-16-caracteres
         # URL do Frontend para o link no e-mail funcionar corretamente
-        FRONTEND_URL=http://localhost:5173
+        FRONTEND_URL=http://localhost:3000
 
 4.  **Inicialize o Banco de Dados:**
     * Execute o script que cria as tabelas (Users, Livros, Favoritos) e colunas necessárias:
