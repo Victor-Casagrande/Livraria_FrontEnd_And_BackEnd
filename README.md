@@ -1,10 +1,4 @@
-# Projeto Final - Livraria Web
-
-Este projeto é a expansão do sistema de gerenciamento de livraria, desenvolvido como avaliação final da disciplina de Desenvolvimento Web I. A aplicação integra um Backend (Node.js/Express) com um Frontend (React), implementando funcionalidades avançadas de autenticação e gerenciamento de dados.
-
 ## Funcionalidades Implementadas
-
-Conforme requisitado no projeto, as seguintes funcionalidades foram implementadas:
 
 1.  **Recuperação de Senha via E-mail:** Fluxo completo com envio de token para o Gmail do usuário e redefinição de senha segura.
 2.  **Sistema de Favoritos:** O usuário pode marcar/desmarcar livros favoritos, que ficam salvos em sua conta pessoal.
@@ -13,7 +7,6 @@ Conforme requisitado no projeto, as seguintes funcionalidades foram implementada
 
 ## Vídeo de Demonstração
 
-## Como Executar o Projeto (Instruções para Correção)
 
 ### Pré-requisitos
 
