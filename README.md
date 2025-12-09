@@ -13,33 +13,29 @@ Conforme requisitado no projeto, as seguintes funcionalidades foram implementada
 
 ## Vídeo de Demonstração
 
-[COLOQUE O LINK DO SEU VÍDEO NO YOUTUBE/DRIVE AQUI]
 
----
 
 ## Como Executar o Projeto (Instruções para Correção)
 
 ### Pré-requisitos
 
 * **Node.js** instalado.
-* Uma conta **Gmail** para testar o envio de e-mails de recuperação (é necessário gerar uma "Senha de App" nas configurações de segurança do Google, pois a senha padrão não funciona mais para aplicações externas).
+* Uma conta **Gmail** para testar o envio de e-mails de recuperação (é necessário gerar uma "Senha de App" nas configurações de segurança do Google, pois a senha padrão não funciona para aplicações externas).
 
 ### Passo 1: Configurar o Backend
 
 1.  Abra o terminal e entre na pasta do backend:
-    ```bash
+    bash
     cd backend
-    ```
 
 2.  Instale as dependências:
-    ```bash
+    bash
     npm install
-    ```
 
 3.  **Configure as variáveis de ambiente:**
     * Duplique o arquivo `.env.example` e renomeie-o para `.env`.
     * Edite o arquivo `.env` com seus dados:
-        ```ini
+        ini
         PORT=3333
         SESSION_SECRET=sua-chave-secreta-aqui
         # Credenciais para envio de e-mail (Obrigatório para recuperar senha)
@@ -47,48 +43,44 @@ Conforme requisitado no projeto, as seguintes funcionalidades foram implementada
         EMAIL_PASS=sua-senha-de-app-google-de-16-caracteres
         # URL do Frontend para o link no e-mail funcionar corretamente
         FRONTEND_URL=http://localhost:5173
-        ```
 
 4.  **Inicialize o Banco de Dados:**
     * Execute o script que cria as tabelas (Users, Livros, Favoritos) e colunas necessárias:
-        ```bash
+        bash
         node scripts/migrate-up.js
-        ```
+        
     * (Opcional) Popule o banco com dados iniciais:
-        ```bash
+        bash
         npm run seed
-        ```
 
 5.  Inicie o servidor:
-    ```bash
+    bash
     npm run dev
-    ```
-    > O servidor rodará na porta **3333**.
+    
+    O servidor rodará na porta **3333**.
 
 ### Passo 2: Configurar o Frontend
 
 1.  Em um **novo terminal**, entre na pasta do frontend:
-    ```bash
+    bash
     cd frontend
-    ```
+    
 
 2.  Instale as dependências:
-    ```bash
+    bash
     npm install
-    ```
+    
 
 3.  Inicie o projeto React:
-    ```bash
+    bash
     npm run dev
-    ```
+    
 
-4.  Acesse o link exibido no terminal (geralmente **http://localhost:5173**).
-
----
+4.  Acesse o link exibido no terminal.
 
 ## Como Testar as Funcionalidades
 
-Recomenda-se testar a aplicação diretamente pela interface web (Frontend), pois as rotas agora são protegidas por autenticação via Cookies.
+Recomenda-se testar a aplicação diretamente pela interface web (Frontend), pois as rotas são protegidas por autenticação via Cookies.
 
 1.  **Crie uma conta** na tela de Registro.
 2.  **Faça Login**.
